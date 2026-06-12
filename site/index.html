@@ -56,10 +56,6 @@
           every scenario scores Match: 9 for 9, a bar reached through iteration — across 31
           runs, the eval pipeline caught real bugs in both the infrastructure and the agent's
           reasoning.</p>
-        <p>My favorite of those bugs: scenario 03, an AZ slowdown, took four runs to pass.
-          The agent first skipped its inspection tools entirely (NoMatch), then hit a missing
-          <code>logs:FilterLogEvents</code> IAM permission (Partial), then read the heartbeat
-          logs in the wrong direction (Partial) — then Match.</p>
         <p class="stack">Terraform 1.14 · Python 3.12 · custom MCP server · Cedar ·
           OpenTelemetry · portfolio project, evaluated against a deliberate outage corpus ·
           <a href="https://github.com/Dimi-DV/triage">source &amp; architecture →</a></p>
