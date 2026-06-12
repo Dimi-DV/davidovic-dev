@@ -1,0 +1,3 @@
+infra/.terraform*
+infra/terraform.tfstate*
+.DS_Store

@@ -1,0 +1,39 @@
+# Deploy site/ to the portfolio bucket on every push to main.
+# Deploy steps are guarded on repo Variables — set them from `terraform output`
+# (AWS_DEPLOY_ROLE_ARN, AWS_REGION, SITE_BUCKET, CF_DIST_ID).
+name: deploy
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['site/**']
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure AWS credentials (OIDC)
+        if: vars.AWS_DEPLOY_ROLE_ARN != ''
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+      - name: Sync to S3
+        if: vars.AWS_DEPLOY_ROLE_ARN != ''
+        run: aws s3 sync site/ "s3://${{ vars.SITE_BUCKET }}" --delete
+      - name: Invalidate CloudFront
+        if: vars.AWS_DEPLOY_ROLE_ARN != ''
+        run: aws cloudfront create-invalidation --distribution-id "${{ vars.CF_DIST_ID }}" --paths "/*"
+      - name: Deploy skipped (no AWS vars yet)
+        if: vars.AWS_DEPLOY_ROLE_ARN == ''
+        run: echo "Set AWS_DEPLOY_ROLE_ARN / AWS_REGION / SITE_BUCKET / CF_DIST_ID repo variables to enable deploy."
