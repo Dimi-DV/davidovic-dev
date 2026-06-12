@@ -36,7 +36,7 @@ variable "github_repo" {
 }
 variable "enable_apex_dns" {
   type    = bool
-  default = false # flip to true ONLY after Dimi approves the content (CLAUDE.md rule 3)
+  default = true # flipped at launch — Dimi approved the content 2026-06-12 (CLAUDE.md rule 3)
 }
 
 data "aws_route53_zone" "main" {
