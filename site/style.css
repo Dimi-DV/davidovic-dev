@@ -186,7 +186,7 @@ a:hover { color: var(--mint-bright); border-color: var(--mint); }
 /* ---- collapsible section panels ---------------------------------------- */
 main { max-width: 880px; margin: 0 auto; padding: 0 24px 64px; }
 details {
-  background: linear-gradient(180deg, rgba(17, 23, 42, 0.85) 0%, rgba(10, 14, 26, 0.95) 100%);
+  background: var(--bg-elev-1);
   border: 1px solid var(--border);
   border-radius: var(--r-3);
   box-shadow: var(--shadow-md), var(--inset-hi);
