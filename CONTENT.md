@@ -4,11 +4,18 @@ Audience: recruiters and hiring managers (New York + remote/international). Tone
 direct, technical, specific — show what was built, no "passionate", no buzzword soup.
 Every claim ground-truth-checked (see CLAUDE.md rule 2).
 
+Design: the site mirrors the **Triage design system** (Dimi's claude.ai/design project
+"Triage Design System") — deep-navy instrument-panel surfaces, mint `#00E5BE` accent
+used sparingly, Geist + Geist Mono (self-hosted woff2), sharp 4px corners, borders
+carry structure, pills are the only round elements. Sections are collapsed
+`<details>` panels that expand on click.
+
 ## Sections (v1)
 
-1. **Hero** — Dimitrije Davidovic Vedda · Cloud/DevOps & Data, with a muted location
-   line: "New York, NY · Open to relocation" (amber status dot). Circular headshot
-   avatar (`site/assets/avatar.jpg` — EXIF-stripped, cropped). One-line
+1. **Hero** — Dimitrije Davidovic Vedda (mint terminal period, mirroring the Triage
+   wordmark) · mono uppercase eyebrow "cloud · devops · data" · location "New York, NY"
+   with a mint status pill "open to relocation". Circular headshot avatar
+   (`site/assets/avatar.jpg` — EXIF-stripped, cropped). One-line
    identity: economics grad → ops analyst → self-taught AWS builder. Native English +
    Serbian. Links: GitHub (Dimi-DV), LinkedIn (dimitrije-vedda), email
    (dimitrije.vedda@outlook.com), CV download.
@@ -48,8 +55,11 @@ Every claim ground-truth-checked (see CLAUDE.md rule 2).
 
 ## Public CV download
 
-A generic (non-tailored) one-page PDF rendered from cv.md — full name, EN. Generate
+A generic (non-tailored) PDF rendered from cv.md — full name, EN; one page preferred,
+but the full generic render runs two — trimming sections to fit is Dimi's call. Generate
 with serb-ops' generate-pdf.mjs + cv-template.html (copy the rendered PDF in; do not
 symlink across repos). The PDF's location line must match the site — New York, NY,
 optionally with the same generic "open to relocation" note, never a target city —
-even if that means adjusting the header for this render.
+even if that means adjusting the header for this render. The public render also
+omits the phone number and the entire Crypto/Web3 independent-experience section
+(Dimi, 2026-06-12).

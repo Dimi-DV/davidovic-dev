@@ -3,18 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dimitrije Davidovic Vedda — Cloud, DevOps & Data</title>
+  <title>Dimitrije Davidovic Vedda — cloud, DevOps & data</title>
   <meta name="description" content="Portfolio of Dimitrije Davidovic Vedda — cloud/DevOps and data projects: Triage (autonomous incident-response agent on AWS Bedrock AgentCore), Terraform infrastructure, CI/CD, data pipelines.">
-  <meta name="theme-color" content="#171210">
-  <link rel="preload" href="assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#0A0E1A">
+  <link rel="preload" href="assets/fonts/geist-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/geist-mono-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="hero">
     <div class="hero-text">
-      <h1>Dimitrije Davidovic Vedda</h1>
-      <p class="tagline">cloud · devops · data</p>
-      <p class="location">New York, NY ·<span class="dot"></span>Open to relocation</p>
+      <p class="eyebrow">cloud · devops · data</p>
+      <h1>Dimitrije Davidovic Vedda<span class="mark">.</span></h1>
+      <p class="location">New York, NY <span class="pill">open to relocation</span></p>
       <p class="intro">Economics grad turned ops analyst, self-taught on AWS.
         I build infrastructure with Terraform and Python — most recently
         <a href="#triage">Triage</a>, an autonomous incident-response agent on
@@ -26,77 +27,121 @@
         <a href="cv/dimitrije-davidovic-vedda-cv.pdf" class="cta">CV (PDF)</a>
       </nav>
     </div>
-    <img class="avatar" src="assets/avatar.jpg" alt="Dimitrije Davidovic Vedda" width="152" height="152">
+    <img class="avatar" src="assets/avatar.jpg" alt="Dimitrije Davidovic Vedda" width="148" height="148">
   </header>
 
   <main>
-    <section id="triage">
-      <h2>Triage — autonomous incident response on AWS</h2>
-      <a href="https://github.com/Dimi-DV/triage"><img class="banner" src="assets/triage-banner.jpg"
-        alt="Triage — autonomous incident response on AWS Bedrock AgentCore" width="1600" height="800"></a>
-      <p>An AIOps agent on AWS Bedrock AgentCore: it watches CloudWatch alarms, investigates
-        failures through a four-namespace custom MCP server (six tools), and posts structured
-        diagnoses to Slack. Write actions pass through Cedar policies at the AgentCore
-        Gateway — six active policies — and every reasoning step and tool call lands in an
-        immutable S3 Object Lock audit journal.</p>
-      <p>Evaluated, not just demoed: a nine-scenario outage corpus — four AWS Fault Injection
-        Service experiments and five deliberate Terraform misconfigurations — scored by
-        AgentCore Evaluations with five built-in evaluators and three custom LLM-as-judge
-        evaluators, including a MAST failure-taxonomy classifier. The most recent run of
-        every scenario scores Match: 9 for 9, a bar reached through iteration — across 31
-        runs, the eval pipeline caught real bugs in both the infrastructure and the agent's
-        reasoning.</p>
-      <p>My favorite of those bugs: scenario 03, an AZ slowdown, took four runs to pass.
-        The agent first skipped its inspection tools entirely (NoMatch), then hit a missing
-        <code>logs:FilterLogEvents</code> IAM permission (Partial), then read the heartbeat
-        logs in the wrong direction (Partial) — then Match.</p>
-      <p class="stack">Terraform 1.14 · Python 3.12 · custom MCP server · Cedar ·
-        OpenTelemetry · portfolio project, evaluated against a deliberate outage corpus ·
-        <a href="https://github.com/Dimi-DV/triage">source &amp; architecture →</a></p>
-    </section>
+    <details id="triage">
+      <summary>
+        <span class="num">01</span>
+        <div class="sum-text">
+          <h2>Triage — autonomous incident response on AWS</h2>
+          <span class="sum-sub">Bedrock AgentCore · MCP · Cedar · evals 9/9</span>
+        </div>
+        <svg class="chev" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <path d="M4 2 L8 6 L4 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </summary>
+      <div class="sec-body">
+        <a href="https://github.com/Dimi-DV/triage"><img class="banner" src="assets/triage-banner.jpg"
+          alt="Triage — autonomous incident response on AWS Bedrock AgentCore" width="1600" height="800"></a>
+        <p>An AIOps agent on AWS Bedrock AgentCore: it watches CloudWatch alarms, investigates
+          failures through a four-namespace custom MCP server (six tools), and posts structured
+          diagnoses to Slack. Write actions pass through Cedar policies at the AgentCore
+          Gateway — six active policies — and every reasoning step and tool call lands in an
+          immutable S3 Object Lock audit journal.</p>
+        <p>Evaluated, not just demoed: a nine-scenario outage corpus — four AWS Fault Injection
+          Service experiments and five deliberate Terraform misconfigurations — scored by
+          AgentCore Evaluations with five built-in evaluators and three custom LLM-as-judge
+          evaluators, including a MAST failure-taxonomy classifier. The most recent run of
+          every scenario scores Match: 9 for 9, a bar reached through iteration — across 31
+          runs, the eval pipeline caught real bugs in both the infrastructure and the agent's
+          reasoning.</p>
+        <p>My favorite of those bugs: scenario 03, an AZ slowdown, took four runs to pass.
+          The agent first skipped its inspection tools entirely (NoMatch), then hit a missing
+          <code>logs:FilterLogEvents</code> IAM permission (Partial), then read the heartbeat
+          logs in the wrong direction (Partial) — then Match.</p>
+        <p class="stack">Terraform 1.14 · Python 3.12 · custom MCP server · Cedar ·
+          OpenTelemetry · portfolio project, evaluated against a deliberate outage corpus ·
+          <a href="https://github.com/Dimi-DV/triage">source &amp; architecture →</a></p>
+      </div>
+    </details>
 
-    <section id="infrastructure">
-      <h2>Infrastructure</h2>
-      <h3>Terraform multi-AZ VPC</h3>
-      <p>A production-style VPC module: four subnets across two availability zones, internet
-        gateway, multi-AZ NAT, custom route tables, and layered security groups — 18 resources
-        per deployment, with remote state in S3 and DynamoDB locking. Validated with EC2 test
-        instances exercising the public→internet, private→NAT, and bastion traffic paths.</p>
-      <h3>CI/CD: GitHub Actions → ECR → ECS Fargate</h3>
-      <p>An end-to-end pipeline: lint → test → build → push to ECR → deploy to ECS Fargate,
-        authenticated via OIDC — no long-lived AWS keys in GitHub. Multi-stage Dockerfile
-        with a non-root user and healthcheck-gated startup.</p>
-      <p class="stack">both in <a href="https://github.com/Dimi-DV/devops-learning">devops-learning</a> ·
-        this site runs the same way: S3 + CloudFront, Terraform-provisioned, OIDC-deployed —
-        <a href="https://github.com/Dimi-DV/davidovic-dev">source</a></p>
-    </section>
+    <details id="infrastructure">
+      <summary>
+        <span class="num">02</span>
+        <div class="sum-text">
+          <h2>Infrastructure</h2>
+          <span class="sum-sub">Terraform multi-AZ VPC · CI/CD with OIDC</span>
+        </div>
+        <svg class="chev" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <path d="M4 2 L8 6 L4 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </summary>
+      <div class="sec-body">
+        <h3>Terraform multi-AZ VPC</h3>
+        <p>A production-style VPC module: four subnets across two availability zones, internet
+          gateway, multi-AZ NAT, custom route tables, and layered security groups — 18 resources
+          per deployment, with remote state in S3 and DynamoDB locking. Validated with EC2 test
+          instances exercising the public→internet, private→NAT, and bastion traffic paths.</p>
+        <h3>CI/CD: GitHub Actions → ECR → ECS Fargate</h3>
+        <p>An end-to-end pipeline: lint → test → build → push to ECR → deploy to ECS Fargate,
+          authenticated via OIDC — no long-lived AWS keys in GitHub. Multi-stage Dockerfile
+          with a non-root user and healthcheck-gated startup.</p>
+        <p class="stack">both in <a href="https://github.com/Dimi-DV/devops-learning">devops-learning</a> ·
+          this site runs the same way: S3 + CloudFront, Terraform-provisioned, OIDC-deployed —
+          <a href="https://github.com/Dimi-DV/davidovic-dev">source</a></p>
+      </div>
+    </details>
 
-    <section id="data">
-      <h2>Data engineering</h2>
-      <p>As an operations analyst at Il Mulino, a New York restaurant group (2023–2025),
-        I ran into a blunt data problem: every location named its dishes differently, so
-        franchise-level, per-dish sales analysis was impossible. I built a Python pipeline
-        (BeautifulSoup, Selenium, sentence-transformers, scikit-learn TF-IDF) that
-        standardized the nomenclature across locations into a unified master sales sheet.</p>
-      <p>The legacy POS had no API — I prototyped GUI screen-mapping automation first, then
-        pivoted to a separate ingestion-and-standardization pipeline. I presented the result
-        to the CEO and the Director of Finance not as a standardization tool but as the
-        franchise-wide per-dish sales picture they could now investigate — and they agreed
-        to make the reports recurring. Alongside it: monthly reconciliation of multi-location Excel sales
-        exports against POS records, with cleansing and validation before anything reached
-        accounting.</p>
-    </section>
+    <details id="data">
+      <summary>
+        <span class="num">03</span>
+        <div class="sum-text">
+          <h2>Data engineering</h2>
+          <span class="sum-sub">Python ETL · NLP standardization · reconciliation</span>
+        </div>
+        <svg class="chev" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <path d="M4 2 L8 6 L4 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </summary>
+      <div class="sec-body">
+        <p>As an operations analyst at Il Mulino, a New York restaurant group (2023–2025),
+          I ran into a blunt data problem: every location named its dishes differently, so
+          franchise-level, per-dish sales analysis was impossible. I built a Python pipeline
+          (BeautifulSoup, Selenium, sentence-transformers, scikit-learn TF-IDF) that
+          standardized the nomenclature across locations into a unified master sales sheet.</p>
+        <p>The legacy POS had no API — I prototyped GUI screen-mapping automation first, then
+          pivoted to a separate ingestion-and-standardization pipeline. I presented the result
+          to the CEO and the Director of Finance not as a standardization tool but as the
+          franchise-wide per-dish sales picture they could now investigate — and they agreed
+          to make the reports recurring. Alongside it: monthly reconciliation of multi-location
+          Excel sales exports against POS records, with cleansing and validation before
+          anything reached accounting.</p>
+      </div>
+    </details>
 
-    <section id="about">
-      <h2>About</h2>
-      <p>Based in New York, NY — open to relocation. BBA in Economics from Baruch College,
-        CUNY (2023), with a minor in political science. Two years as an operations analyst
-        in New York, then a self-directed 60-day sprint from Linux fundamentals through
-        Terraform and CI/CD to the eval-driven Triage capstone.</p>
-      <p>Looking for early-career cloud/DevOps and data roles. Native English and Serbian.
-        The fastest way to reach me is
-        <a href="mailto:dimitrije.vedda@outlook.com">email</a>.</p>
-    </section>
+    <details id="about">
+      <summary>
+        <span class="num">04</span>
+        <div class="sum-text">
+          <h2>About</h2>
+          <span class="sum-sub">BBA economics · 60-day sprint · EN/SR</span>
+        </div>
+        <svg class="chev" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <path d="M4 2 L8 6 L4 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </summary>
+      <div class="sec-body">
+        <p>Based in New York, NY — open to relocation. BBA in Economics from Baruch College,
+          CUNY (2023), with a minor in political science. Two years as an operations analyst
+          in New York, then a self-directed 60-day sprint from Linux fundamentals through
+          Terraform and CI/CD to the eval-driven Triage capstone.</p>
+        <p>Looking for early-career cloud/DevOps and data roles. Native English and Serbian.
+          The fastest way to reach me is
+          <a href="mailto:dimitrije.vedda@outlook.com">email</a>.</p>
+      </div>
+    </details>
   </main>
 
   <footer>
@@ -104,5 +149,15 @@
     <p class="colophon">plain HTML/CSS on S3 + CloudFront · provisioned with Terraform ·
       deployed by GitHub Actions (OIDC) · <a href="https://github.com/Dimi-DV/davidovic-dev">source</a></p>
   </footer>
+
+  <script>
+    // open a collapsed section when a fragment link targets it
+    const openTarget = () => {
+      const el = document.getElementById(location.hash.slice(1));
+      if (el && el.tagName === 'DETAILS') el.open = true;
+    };
+    addEventListener('hashchange', openTarget);
+    openTarget();
+  </script>
 </body>
 </html>
